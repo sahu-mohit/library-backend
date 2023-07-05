@@ -16,4 +16,12 @@ public class DataTypeUtility {
         }
         return (long)(int)(Integer)value;
     }
+
+    public static Boolean booleanvalue(Object value){
+        if(!(value.toString().equals("") || value == null || value.toString().equalsIgnoreCase("null"))){
+            return true;
+        }else{
+            return false;
+        }
+    }
 }

@@ -3,6 +3,7 @@ package com.library.main.controller;
 
 import com.library.main.Entities.Book;
 import com.library.main.Service.BookService;
+import com.library.main.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,6 +15,17 @@ public class Restcontroller {
 
     @Autowired
     BookService bookService;
+
+    @Autowired
+    UserService userService;
+
+    @PostMapping("/registration")
+    public String registration(@RequestBody Map<String, Object> param){
+        String user = userService.registration(param);
+        return user;
+    }
+
+
     @PostMapping("/addBook")
     public void addbook(@RequestBody Map<String, Object> param){
         bookService.addBook(param);
