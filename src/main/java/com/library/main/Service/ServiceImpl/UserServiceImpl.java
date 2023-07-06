@@ -6,6 +6,7 @@ import com.library.main.Service.UserService;
 import com.library.main.Utility.DataTypeUtility;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.Map;
@@ -16,7 +17,7 @@ public class UserServiceImpl implements UserService {
     @Autowired
     UserRepo userRepo;
     @Override
-    public String registration(Map<String, Object> param) {
+    public ResponseEntity<String> registration(Map<String, Object> param) {
         Long id = DataTypeUtility.longvalue(param.get("id"));
         String firstname = DataTypeUtility.stringvlue(param.get("firstname"));
         String lastname = DataTypeUtility.stringvlue(param.get("lastname"));
@@ -33,9 +34,9 @@ public class UserServiceImpl implements UserService {
             user.setPassword(password);
             user.setCheckout(checkout);
             userRepo.save(user);
-            return "User Register successefully";
+            return ResponseEntity.ok("successefully");
         }else{
-            return "not register please check T&C";
+            return ResponseEntity.ok("not registerd");
         }
 
     }

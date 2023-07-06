@@ -5,17 +5,19 @@ import com.library.main.Repository.BookRepo;
 import com.library.main.Service.BookService;
 import com.library.main.Utility.DataTypeUtility;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @Service
 public class BookServiceImpl implements BookService {
     @Autowired
     BookRepo bookRepo;
     @Override
-    public void addBook(Map<String, Object> param) {
+    public ResponseEntity<String> addBook(Map<String, Object> param) {
         Long id = DataTypeUtility.longvalue(param.get("id"));
         String name = DataTypeUtility.stringvlue(param.get("name"));
         String authorname = DataTypeUtility.stringvlue((param.get("author")));
@@ -41,17 +43,18 @@ public class BookServiceImpl implements BookService {
             }
             bookRepo.save(book);
         }
+        return ResponseEntity.ok("Book Add Successfully");
     }
 
     @Override
-    public List<Book> getAllBook() {
+    public Object getAllBook() {
         List<Book> book = bookRepo.findAll();
         return book;
     }
 
     @Override
     public Book getBookById(Long id) {
-        Book book = new Book();
+        Book book = null;
         try{
         book = bookRepo.findById(id).get();
         }catch (Exception e){
@@ -61,9 +64,12 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public void deleteBook(Long id) {
+    public ResponseEntity<?> deleteBook(Long id) {
         if(id != 0l || id != null){
             bookRepo.deleteById(id);
+            return ResponseEntity.ok("Deleted Successfully");
+        }else{
+            return ResponseEntity.ok("Not Deleted");
         }
     }
 }

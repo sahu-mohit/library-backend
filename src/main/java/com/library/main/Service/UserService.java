@@ -1,7 +1,9 @@
 package com.library.main.Service;
 
+import org.springframework.http.ResponseEntity;
+
 import java.util.Map;
 
 public interface UserService {
-    String registration(Map<String, Object> param);
+    ResponseEntity<String> registration(Map<String, Object> param);
 }

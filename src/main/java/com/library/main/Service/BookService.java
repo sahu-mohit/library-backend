@@ -1,16 +1,17 @@
 package com.library.main.Service;
 
 import com.library.main.Entities.Book;
+import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 import java.util.Map;
 
 public interface BookService{
-    void addBook(Map<String, Object> param);
+    ResponseEntity<String> addBook(Map<String, Object> param);
 
-    List<Book> getAllBook();
+    Object getAllBook();
 
     Book getBookById(Long id);
 
-    void deleteBook(Long id);
+    ResponseEntity<?> deleteBook(Long id);
 }

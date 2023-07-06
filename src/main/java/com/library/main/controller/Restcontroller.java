@@ -5,10 +5,12 @@ import com.library.main.Entities.Book;
 import com.library.main.Service.BookService;
 import com.library.main.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @RestController
 public class Restcontroller {
@@ -20,29 +22,46 @@ public class Restcontroller {
     UserService userService;
 
     @PostMapping("/registration")
-    public String registration(@RequestBody Map<String, Object> param){
-        String user = userService.registration(param);
-        return user;
+    public ResponseEntity<?> registration(@RequestBody Map<String, Object> param){
+        return userService.registration(param);
     }
 
 
     @PostMapping("/addBook")
-    public void addbook(@RequestBody Map<String, Object> param){
-        bookService.addBook(param);
+    public ResponseEntity<?> addbook(@RequestBody Map<String, Object> param){
+        try{
+            return (bookService.addBook(param));
+        }catch (Exception e){
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
     }
     @GetMapping("/book")
-    public List<Book> getAllBook(){
-        List<Book> book = bookService.getAllBook();
-        return book;
+    public Object getAllBook(){
+        Object book = bookService.getAllBook();
+        try{
+            if(book != null){
+                return ResponseEntity.of((Optional.of(book)));
+            }else{
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        }
     }
     @PostMapping("/book")
-    public Book getBookById(@RequestParam Long id){
-         Book book = bookService.getBookById(id);
-        return book;
+    public ResponseEntity<Book> getBookById(@RequestParam Long id){
+            Book book = bookService.getBookById(id);
+            if(book != null) {
+                return ResponseEntity.ok().build();
+            }else{
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+            }
     }
     @PostMapping("/deleteBook")
-    public void deleteBook(@RequestParam Long id){
-         bookService.deleteBook(id);
+    public ResponseEntity<?>deleteBook(@RequestParam Long id){
+            return bookService.deleteBook(id);
     }
 }
 
