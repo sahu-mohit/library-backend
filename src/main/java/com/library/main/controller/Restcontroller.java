@@ -2,17 +2,18 @@ package com.library.main.controller;
 
 
 import com.library.main.Entities.Book;
+import com.library.main.Entities.User;
 import com.library.main.Service.BookService;
 import com.library.main.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
 @RestController
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class Restcontroller {
 
     @Autowired
@@ -26,6 +27,10 @@ public class Restcontroller {
         return userService.registration(param);
     }
 
+    @PostMapping("/login")
+    public ResponseEntity<?> login(@RequestBody Map<String, Object> param){
+        return userService.login(param);
+    }
 
     @PostMapping("/addBook")
     public ResponseEntity<?> addbook(@RequestBody Map<String, Object> param){

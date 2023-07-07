@@ -6,6 +6,7 @@ import com.library.main.Service.UserService;
 import com.library.main.Utility.DataTypeUtility;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -33,11 +34,24 @@ public class UserServiceImpl implements UserService {
             user.setEmailid(emailid);
             user.setPassword(password);
             user.setCheckout(checkout);
-            userRepo.save(user);
+//            userRepo.save(user);
             return ResponseEntity.ok("successefully");
         }else{
             return ResponseEntity.ok("not registerd");
         }
 
+    }
+
+    @Override
+    public ResponseEntity<?> login(Map<String, Object> param) {
+        String emailid = DataTypeUtility.stringvlue(param.get("emailid"));
+        String password = DataTypeUtility.stringvlue(param.get("password"));
+        User user = userRepo.findByEmailidAndPassword(emailid,password);
+        if(user != null){
+            return ResponseEntity.ok("success");
+        }else{
+//            return ResponseEntity.ok("failed");
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
     }
 }

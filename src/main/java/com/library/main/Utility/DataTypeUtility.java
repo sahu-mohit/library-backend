@@ -18,7 +18,7 @@ public class DataTypeUtility {
     }
 
     public static Boolean booleanvalue(Object value){
-        if(!(value.toString().equals("") || value == null || value.toString().equalsIgnoreCase("null"))){
+        if(!(value.toString().equals("") || value == null || value.toString().equalsIgnoreCase("null") || !(Boolean)value)){
             return true;
         }else{
             return false;
