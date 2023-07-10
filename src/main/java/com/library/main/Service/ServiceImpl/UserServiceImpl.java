@@ -34,7 +34,7 @@ public class UserServiceImpl implements UserService {
             user.setEmailid(emailid);
             user.setPassword(password);
             user.setCheckout(checkout);
-//            userRepo.save(user);
+            userRepo.save(user);
             return ResponseEntity.ok("successefully");
         }else{
             return ResponseEntity.ok("not registerd");
@@ -50,8 +50,8 @@ public class UserServiceImpl implements UserService {
         if(user != null){
             return ResponseEntity.ok("success");
         }else{
-//            return ResponseEntity.ok("failed");
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+            return ResponseEntity.ok("failed");
+//            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
     }
 }

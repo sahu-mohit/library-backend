@@ -1,9 +1,11 @@
 package com.library.main.Entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Setter
 @Getter
@@ -18,4 +20,7 @@ public class User {
     private String emailid;
     private String password;
     private Boolean checkout;
+    @OneToMany
+    @JsonBackReference
+    private List<Book> books;
 }
